@@ -291,8 +291,18 @@ const routes = [
 
 const VOTES_KEY = 'huttentocht_votes';
 const USERNAME_KEY = 'huttentocht_username';
+const APP_CONFIG = window.APP_CONFIG || {};
+const REMOTE_VOTING = APP_CONFIG.remoteVoting || {};
+const REMOTE_ENABLED = Boolean(REMOTE_VOTING.enabled && REMOTE_VOTING.firebaseDatabaseUrl);
+const REMOTE_DB_URL = (REMOTE_VOTING.firebaseDatabaseUrl || '').replace(/\/+$/, '');
+const VOTE_SYNC_MS = Number(REMOTE_VOTING.pollIntervalMs) > 0
+  ? Number(REMOTE_VOTING.pollIntervalMs)
+  : 10000;
 
-function getVotes() {
+let votesCache = [];
+let isRefreshingVotes = false;
+
+function getVotesFromLocalStorage() {
   try {
     return JSON.parse(localStorage.getItem(VOTES_KEY) || '[]');
   } catch (e) {
@@ -300,8 +310,72 @@ function getVotes() {
   }
 }
 
-function saveVotes(votes) {
+function saveVotesToLocalStorage(votes) {
   localStorage.setItem(VOTES_KEY, JSON.stringify(votes));
+}
+
+function normalizeVotes(votes) {
+  if (!Array.isArray(votes)) return [];
+  const map = new Map();
+  votes.forEach(v => {
+    if (!v || typeof v !== 'object') return;
+    const name = String(v.name || '').trim();
+    const routeId = Number(v.routeId);
+    if (!name || !Number.isFinite(routeId)) return;
+    map.set(name.toLowerCase(), {
+      name,
+      routeId,
+      ts: Number(v.ts) || Date.now(),
+    });
+  });
+  return Array.from(map.values());
+}
+
+function getVotes() {
+  return votesCache;
+}
+
+function voteKeyFromName(name) {
+  return String(name || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 64) || 'anonymous';
+}
+
+async function remoteRequest(method, path, body) {
+  const options = {
+    method,
+    headers: { 'Content-Type': 'application/json' },
+    cache: 'no-store',
+  };
+  if (body !== undefined) options.body = JSON.stringify(body);
+  const res = await fetch(path, options);
+  if (!res.ok) throw new Error(`Remote vote request failed (${res.status})`);
+  if (res.status === 204) return null;
+  return res.json();
+}
+
+async function loadVotes() {
+  if (!REMOTE_ENABLED) {
+    votesCache = normalizeVotes(getVotesFromLocalStorage());
+    return votesCache;
+  }
+
+  const data = await remoteRequest('GET', `${REMOTE_DB_URL}/votes.json`);
+  votesCache = normalizeVotes(data ? Object.values(data) : []);
+  return votesCache;
+}
+
+async function remoteSetVote(vote) {
+  const key = voteKeyFromName(vote.name);
+  await remoteRequest('PUT', `${REMOTE_DB_URL}/votes/${key}.json`, vote);
+}
+
+async function remoteDeleteVoteByName(name) {
+  const key = voteKeyFromName(name);
+  await remoteRequest('DELETE', `${REMOTE_DB_URL}/votes/${key}.json`);
 }
 
 function getUsername() {
@@ -330,23 +404,65 @@ function getUserVotedRouteId() {
   return v ? v.routeId : null;
 }
 
-function castOrToggleVote(routeId) {
+async function castOrToggleVote(routeId) {
   const name = getUsername();
   if (!name) { pendingVoteRouteId = routeId; openNameModal(false); return; }
-  let votes = getVotes();
-  const existing = votes.find(x => x.name.toLowerCase() === name.toLowerCase());
-  if (existing) {
-    if (existing.routeId === routeId) {
-      // toggle off
-      votes = votes.filter(x => x.name.toLowerCase() !== name.toLowerCase());
+
+  try {
+    const existing = getVotes().find(x => x.name.toLowerCase() === name.toLowerCase());
+
+    if (REMOTE_ENABLED) {
+      if (existing && existing.routeId === routeId) {
+        await remoteDeleteVoteByName(name);
+      } else {
+        await remoteSetVote({ name, routeId, ts: Date.now() });
+      }
+      await loadVotes();
     } else {
-      existing.routeId = routeId;
+      let votes = [...getVotes()];
+      if (existing) {
+        if (existing.routeId === routeId) {
+          votes = votes.filter(x => x.name.toLowerCase() !== name.toLowerCase());
+        } else {
+          votes = votes.map(v => (
+            v.name.toLowerCase() === name.toLowerCase()
+              ? { ...v, routeId, ts: Date.now() }
+              : v
+          ));
+        }
+      } else {
+        votes.push({ name, routeId, ts: Date.now() });
+      }
+      votesCache = normalizeVotes(votes);
+      saveVotesToLocalStorage(votesCache);
     }
-  } else {
-    votes.push({ name, routeId, ts: Date.now() });
+
+    updateVoteUI();
+  } catch (err) {
+    console.error(err);
+    alert('Stem opslaan mislukt. Probeer het opnieuw.');
+    if (REMOTE_ENABLED) {
+      try {
+        await loadVotes();
+        updateVoteUI();
+      } catch (_) {
+        // no-op
+      }
+    }
   }
-  saveVotes(votes);
-  updateVoteUI();
+}
+
+async function refreshVotesAndUI() {
+  if (!REMOTE_ENABLED || isRefreshingVotes) return;
+  isRefreshingVotes = true;
+  try {
+    await loadVotes();
+    updateVoteUI();
+  } catch (err) {
+    console.error(err);
+  } finally {
+    isRefreshingVotes = false;
+  }
 }
 
 /* ═══════════════ NAME MODAL ═══ */
@@ -369,35 +485,56 @@ function openNameModal(isRename) {
   }
   modal.classList.add('open');
   setTimeout(() => input.focus(), 100);
-  input.onkeydown = e => { if (e.key === 'Enter') modalConfirm(); };
+  input.onkeydown = e => { if (e.key === 'Enter') void modalConfirm(); };
 }
 
-function closeModal() {
+function closeModal(clearPending = true) {
   document.getElementById('vote-modal').classList.remove('open');
-  pendingVoteRouteId = null;
+  if (clearPending) pendingVoteRouteId = null;
 }
 
-function modalConfirm() {
+async function modalConfirm() {
   const name = document.getElementById('modal-name-input').value.trim();
   if (!name) { document.getElementById('modal-name-input').focus(); return; }
-  // If renaming: update existing vote
-  if (pendingVoteRouteId === null) {
-    const oldName = getUsername();
-    if (oldName && oldName !== name) {
-      let votes = getVotes();
-      const existing = votes.find(x => x.name.toLowerCase() === oldName.toLowerCase());
-      if (existing) existing.name = name;
-      saveVotes(votes);
+
+  const oldName = getUsername();
+  const queuedRouteId = pendingVoteRouteId;
+
+  try {
+    if (queuedRouteId === null && oldName && oldName !== name) {
+      if (REMOTE_ENABLED) {
+        const existing = getVotes().find(x => x.name.toLowerCase() === oldName.toLowerCase());
+        if (existing) {
+          await remoteDeleteVoteByName(oldName);
+          await remoteSetVote({ ...existing, name, ts: Date.now() });
+          await loadVotes();
+        }
+      } else {
+        const votes = getVotes().map(v => (
+          v.name.toLowerCase() === oldName.toLowerCase()
+            ? { ...v, name, ts: Date.now() }
+            : v
+        ));
+        votesCache = normalizeVotes(votes);
+        saveVotesToLocalStorage(votesCache);
+      }
     }
-  }
-  saveUsername(name);
-  closeModal();
-  if (pendingVoteRouteId !== null) {
-    const rid = pendingVoteRouteId;
+
+    saveUsername(name);
+    closeModal(false);
+
+    if (queuedRouteId !== null) {
+      const rid = queuedRouteId;
+      pendingVoteRouteId = null;
+      await castOrToggleVote(rid);
+    } else {
+      pendingVoteRouteId = null;
+      updateVoteUI();
+    }
+  } catch (err) {
+    console.error(err);
+    alert('Naam opslaan mislukt. Probeer het opnieuw.');
     pendingVoteRouteId = null;
-    castOrToggleVote(rid);
-  } else {
-    updateVoteUI();
   }
 }
 
@@ -636,14 +773,14 @@ document.getElementById('nav-back').addEventListener('click', showHome);
 document.getElementById('btn-prev').addEventListener('click', () => changeDay(-1));
 document.getElementById('btn-next').addEventListener('click', () => changeDay(1));
 document.getElementById('modal-cancel-btn').addEventListener('click', closeModal);
-document.getElementById('modal-confirm-btn').addEventListener('click', modalConfirm);
+document.getElementById('modal-confirm-btn').addEventListener('click', () => { void modalConfirm(); });
 
 document.getElementById('routes-grid').addEventListener('click', e => {
   const target = e.target.closest('[data-action][data-route-id]');
   if (!target) return;
   const routeId = Number(target.dataset.routeId);
   if (target.dataset.action === 'show-route') showRoute(routeId);
-  if (target.dataset.action === 'vote-route') castOrToggleVote(routeId);
+  if (target.dataset.action === 'vote-route') void castOrToggleVote(routeId);
 });
 
 document.getElementById('day-nav').addEventListener('click', e => {
@@ -653,4 +790,22 @@ document.getElementById('day-nav').addEventListener('click', e => {
 });
 
 /* ═══════════════ INIT ═══ */
-renderHome();
+async function init() {
+  try {
+    await loadVotes();
+  } catch (err) {
+    console.error(err);
+    votesCache = normalizeVotes(getVotesFromLocalStorage());
+  }
+
+  renderHome();
+
+  if (REMOTE_ENABLED) {
+    window.setInterval(() => { void refreshVotesAndUI(); }, VOTE_SYNC_MS);
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) void refreshVotesAndUI();
+    });
+  }
+}
+
+void init();
