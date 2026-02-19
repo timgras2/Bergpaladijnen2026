@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Huttentochten Oostenrijk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div id="progress-bar"></div>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-logo">
+    <i class="fas fa-mountain"></i>
+    <span>Huttentochten Oostenrijk</span>
+  </div>
+  <div class="nav-right">
+    <button class="nav-name-btn" id="nav-name-btn">
+      <i class="fas fa-user"></i>
+      <span id="nav-name-label">Stel naam in</span>
+    </button>
+    <button class="nav-back visible" id="nav-back" style="display:none">
+      <i class="fas fa-chevron-left"></i> Alle routes
+    </button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════ HOME VIEW ══════════════════════════════ -->
+<div id="home-view" class="view active">
+
+  <section id="hero">
+    <img class="hero-img"
+      src="https://commons.wikimedia.org/wiki/Special:FilePath/Etappe_zwischen_N%C3%BCrnberger_H%C3%BCtte_und_Bremer_H%C3%BCtte.jpg?width=1600"
+      alt="Oostenrijkse Alpen">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Hut tot hut · Oostenrijk · Eind juni</div>
+      <h1 class="hero-title">Wandelen door de<br><em>Oostenrijkse Alpen</em></h1>
+      <p class="hero-subtitle">
+        Vier meerdaagse tochten door spectaculaire berglandschappen.<br>
+        Elke dag een ander uitzicht, elke avond een warme hut.
+      </p>
+      <div class="hero-tags">
+        <span class="hero-tag"><i class="fas fa-calendar-days"></i>&nbsp; 5 dagen</span>
+        <span class="hero-tag"><i class="fas fa-bed"></i>&nbsp; Hut tot hut</span>
+        <span class="hero-tag"><i class="fas fa-mountain-sun"></i>&nbsp; Moeilijkheid 4/6</span>
+        <span class="hero-tag"><i class="fas fa-bolt"></i>&nbsp; 1 uitdagingsdag per route</span>
+      </div>
+      <a href="#routes" class="hero-cta">
+        <i class="fas fa-map"></i> Bekijk de routes
+      </a>
+    </div>
+    <div class="hero-scroll"><span>Scroll</span><i class="fas fa-chevron-down"></i></div>
+  </section>
+
+  <div class="intro-strip">
+    <div class="intro-stat"><span class="intro-stat-num">4</span><span class="intro-stat-label">routes</span></div>
+    <div class="intro-stat"><span class="intro-stat-num">5</span><span class="intro-stat-label">dagen per tocht</span></div>
+    <div class="intro-stat"><span class="intro-stat-num">~60</span><span class="intro-stat-label">km per route</span></div>
+    <div class="intro-stat"><span class="intro-stat-num">4/6</span><span class="intro-stat-label">moeilijkheid</span></div>
+    <div class="intro-stat"><span class="intro-stat-num">⚡</span><span class="intro-stat-label">uitdagingsdag</span></div>
+  </div>
+
+  <section class="routes-section" id="routes">
+    <div class="section-label">De routes</div>
+    <h2 class="section-title">Kies jouw<br>avontuur</h2>
+    <div class="routes-grid" id="routes-grid"></div>
+
+    <!-- Vote results -->
+    <div class="vote-results-section">
+      <div class="vote-results-header">
+        <div class="vote-results-title"><i class="fas fa-chart-bar"></i> Stemuitslag</div>
+        <div class="total-votes-badge" id="total-votes-badge">0 stemmen</div>
+      </div>
+      <div class="vote-bars" id="vote-bars"></div>
+    </div>
+  </section>
+
+  <footer>
+    <strong>Reserveren verplicht</strong> · Hutten zijn te boeken via het DAV- of ÖAV-portal, of rechtstreeks.<br>
+    Controleer altijd de actuele parcourscondities voor vertrek.
+  </footer>
+</div>
+
+<!-- ══════════════════════════════ ROUTE DETAIL VIEW ══════════════════════════════ -->
+<div id="route-view" class="view">
+  <div class="route-hero">
+    <img class="route-hero-img" id="rh-img" src="" alt="">
+    <div class="route-hero-overlay"></div>
+    <div class="route-hero-content">
+      <div class="route-hero-region" id="rh-region"></div>
+      <h1 class="route-hero-title" id="rh-title"></h1>
+      <p class="route-hero-tagline" id="rh-tagline"></p>
+    </div>
+  </div>
+  <div class="route-meta-strip" id="route-meta-strip"></div>
+  <div class="day-nav-wrapper"><div class="day-nav" id="day-nav"></div></div>
+  <div class="day-panels-wrapper">
+    <div id="day-panels"></div>
+    <div class="day-nav-arrows">
+      <button class="day-arrow-btn" id="btn-prev"><i class="fas fa-chevron-left"></i> Vorige dag</button>
+      <button class="day-arrow-btn" id="btn-next">Volgende dag <i class="fas fa-chevron-right"></i></button>
+    </div>
+  </div>
+  <footer>
+    <strong>Reserveren verplicht</strong> · Hutten zijn te boeken via het DAV- of ÖAV-portal, of rechtstreeks.<br>
+    Controleer altijd de actuele parcourscondities voor vertrek.
+  </footer>
+</div>
+
+<!-- ══════════════════════════════ VOTE MODAL ══════════════════════════════ -->
+<div class="modal-overlay" id="vote-modal">
+  <div class="modal-box">
+    <div class="modal-icon">🏔️</div>
+    <div class="modal-title" id="modal-title">Jouw naam</div>
+    <div class="modal-sub" id="modal-sub">Vul je naam in zodat de groep ziet wie op welke route stemt.</div>
+    <input class="modal-input" id="modal-name-input" type="text" placeholder="Bijv. Tim" maxlength="24" autocomplete="off">
+    <div class="modal-btns">
+      <button class="modal-btn modal-btn-cancel" id="modal-cancel-btn">Annuleren</button>
+      <button class="modal-btn modal-btn-confirm" id="modal-confirm-btn">Stem!</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js" defer></script>
+</body>
+</html>
+
+
