@@ -73,7 +73,7 @@ const routes = [
         distance:'~10 km', elevation:'+950m / -40m', time:'5–6 uur',
         terrain:'Lariksbossen · beekjes · bloemrijke alpenweiden',
         desc:'Een fraaie, geleidelijke start door gemengde lariksbossen met kabbelende beekjes als begeleiding. Bloemrijke alpenweiden kondigen de hoogte aan. Het sfeervolle Schladminger landschap omgeeft je terwijl je klimt naar de gastvrije Preintalerhütte.',
-        img:'https://images.unsplash.com/photo-1551632811-561732d1e306?w=700&auto=format&fit=crop&q=80',
+        img:'https://commons.wikimedia.org/wiki/Special:FilePath/Giglachseen_-_panoramio.jpg?width=700',
         imgCaption:'Lariksbossen en alpenweiden bij de opstap vanuit Schladming'},
       { day:2, challenge:true,
         title:'Preintalerhütte → Arthur-von-Schmid-Haus',
@@ -109,7 +109,7 @@ const routes = [
         distance:'~9 km', elevation:'+50m / -1.300m', time:'~4 uur',
         terrain:'Alpenweiden · lariksbossen · Ennstal',
         desc:'Afdaling via brede alpenweiden en sfeervolle lariksbossen terug naar het startpunt. Uitzicht over het Ennstal maakt de cirkel rond. Een tevreden, ontspannen terugkeer naar Schladming — een welverdiend terras wacht.',
-        img:'https://images.unsplash.com/photo-1475924156734-496f564e0c43?w=700&auto=format&fit=crop&q=80',
+        img:'https://commons.wikimedia.org/wiki/Special:FilePath/Gamskarlspitze_-_Rosskogel_-_Oberh%C3%BCttensee.jpg?width=700',
         imgCaption:'Afdaling via brede alpenweiden en lariksbossen naar Schladming'},
     ]
   },
@@ -207,7 +207,7 @@ const routes = [
         distance:'~15 km', elevation:'+1.450m / -1.700m', time:'9–10 uur',
         terrain:'Sefinenfurke (2.612m) · T5 klauterpassages · steilste dag · Kiental',
         desc:'De meest uitdagende dag van de traversa. De Sefinenfurke (2.612m) is een steil, geëxponeerd rotspad — officieel T5 waarbij handen en voeten nodig zijn. Na de adembenemende pas volgt een spectaculaire afdaling over de Bütlasse-kalkstenen naar het rustige Griesalp in het Kiental, één van de stilste dalen van Zwitserland.',
-        img:'https://images.unsplash.com/photo-1464822759023-fed107efd72a?w=700&auto=format&fit=crop&q=80',
+        img:'https://commons.wikimedia.org/wiki/Special:FilePath/Bachalpsee_-_panoramio.jpg?width=700',
         imgCaption:'Geëxponeerde kalksteenwereld op de Sefinenfurke-traverse'},
       { day:4, challenge:false,
         title:'Griesalp → Blüemlisalphütte SAC (2.840m)',
@@ -477,6 +477,26 @@ function getVotesByUser(name) {
 /* ═══════════════ IMAGE BASE ═══ */
 const IMG = 'https://images.unsplash.com/';
 const imgUrl = src => src && src.startsWith('http') ? src : IMG + src;
+const FALLBACK_IMG = 'https://images.unsplash.com/photo-1464822759023-fed107efd72a?auto=format&fit=crop&q=80';
+
+function bindImageFallbacks(root = document) {
+  const applyFallback = (img) => {
+    if (img.dataset.fallbackApplied === '1') return;
+    img.dataset.fallbackApplied = '1';
+    const width = img.classList.contains('route-card-img') ? 900 : 1600;
+    img.src = `${FALLBACK_IMG}&w=${width}`;
+  };
+
+  root.querySelectorAll('img').forEach(img => {
+    if (img.dataset.fallbackBound === '1') return;
+    img.dataset.fallbackBound = '1';
+
+    img.addEventListener('error', () => applyFallback(img));
+
+    // If the image already failed before the handler was attached, recover immediately.
+    if (img.complete && img.naturalWidth === 0) applyFallback(img);
+  });
+}
 
 
 
@@ -729,6 +749,7 @@ function renderHome() {
     grid.appendChild(card);
     requestAnimationFrame(() => setTimeout(() => card.classList.add('visible'), 80 + i*100));
   });
+  bindImageFallbacks(grid);
   updateVoteUI();
 }
 
@@ -814,6 +835,7 @@ function showRoute(id) {
   document.getElementById('home-view').classList.remove('active');
   document.getElementById('route-view').classList.add('active');
   document.getElementById('nav-back').style.display = 'flex';
+  bindImageFallbacks(document.getElementById('route-view'));
   window.scrollTo(0,0);
   updateArrows();
 }
@@ -887,6 +909,7 @@ async function init() {
   }
 
   renderHome();
+  bindImageFallbacks(document);
 
   if (REMOTE_ENABLED) {
     window.setInterval(() => { void refreshVotesAndUI(); }, VOTE_SYNC_MS);
