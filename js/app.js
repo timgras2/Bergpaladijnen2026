@@ -478,18 +478,40 @@ function getVotesByUser(name) {
 const IMG = 'https://images.unsplash.com/';
 const imgUrl = src => src && src.startsWith('http') ? src : IMG + src;
 const FALLBACK_IMG = 'https://images.unsplash.com/photo-1464822759023-fed107efd72a?auto=format&fit=crop&q=80';
+const FALLBACK_SVG = 'data:image/svg+xml;utf8,' +
+  encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">' +
+    '<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">' +
+      '<stop offset="0" stop-color="#dde8f2"/><stop offset="1" stop-color="#c6d8e8"/>' +
+    '</linearGradient></defs>' +
+    '<rect width="1200" height="800" fill="url(#g)"/>' +
+    '<path d="M0 610 L250 430 L430 560 L640 300 L840 520 L980 420 L1200 610 L1200 800 L0 800 Z" fill="#8aa6be"/>' +
+    '<path d="M0 660 L300 500 L520 620 L760 380 L980 560 L1200 660 L1200 800 L0 800 Z" fill="#6f8ca8"/>' +
+    '<circle cx="940" cy="180" r="58" fill="#f5f3e7"/>' +
+    '<text x="50%" y="90%" text-anchor="middle" fill="#274057" font-size="44" font-family="Arial, sans-serif">Afbeelding tijdelijk niet beschikbaar</text>' +
+  '</svg>');
 
 function bindImageFallbacks(root = document) {
   const applyFallback = (img) => {
-    if (img.dataset.fallbackApplied === '1') return;
-    img.dataset.fallbackApplied = '1';
-    const width = img.classList.contains('route-card-img') ? 900 : 1600;
-    img.src = `${FALLBACK_IMG}&w=${width}`;
+    const stage = Number(img.dataset.fallbackStage || '0');
+    if (stage === 0) {
+      const width = img.classList.contains('route-card-img') ? 900 : 1600;
+      img.dataset.fallbackStage = '1';
+      img.src = `${FALLBACK_IMG}&w=${width}`;
+      return;
+    }
+    if (stage === 1) {
+      img.dataset.fallbackStage = '2';
+      img.src = FALLBACK_SVG;
+    }
   };
 
   root.querySelectorAll('img').forEach(img => {
     if (img.dataset.fallbackBound === '1') return;
     img.dataset.fallbackBound = '1';
+    const srcForPolicy = (img.currentSrc || img.src || '');
+    if (srcForPolicy.startsWith('http')) {
+      img.referrerPolicy = 'no-referrer';
+    }
 
     img.addEventListener('error', () => applyFallback(img));
 
