@@ -1,13 +1,13 @@
 const routes = [
 
   {
-    id:1, name:'Stubaier Höhenweg', region:'Stubaier Alpen, Tirol',
-    tagline:'Klassieke lus rondom het Stubaier gletsjermassief',
+    id:1, name:'Stubaier Höhenweg', region:'Stubaier Alpen, Tirol, Oostenrijk',
+    tagline:'Klassieke lus langs het Stubaier massief',
     character:'Hoogalpieen', landscape:'Bossen · weiden · gletsjerkammen',
     heroImg:'https://commons.wikimedia.org/wiki/Special:FilePath/Etappe_zwischen_N%C3%BCrnberger_H%C3%BCtte_und_Bremer_H%C3%BCtte.jpg?width=1400',
     cardImg:'https://commons.wikimedia.org/wiki/Special:FilePath/Etappe_zwischen_N%C3%BCrnberger_H%C3%BCtte_und_Bremer_H%C3%BCtte.jpg?width=600',
-    difficulty:'4/6', vanUtrecht:'~1.150 km', totaalKm:'~66 km', totaalStijging:'~9.400 hm',
-    transport:'Bus vanuit Innsbruck', startEnd:'Neustift ↔ Ranalt',
+    difficulty:'4/6', vanUtrecht:'920 km', totaalKm:'66 km', totaalStijging:'9.400 m',
+    transport:'Utrecht – Neustift im Stubaital · 920 km', driveTime:'09:45 uur', startEnd:'Neustift ↔ Ranalt',
     days:[
       { day:1, challenge:false,
         title:'Neustift → Starkenburger Hütte',
@@ -58,13 +58,13 @@ const routes = [
   },
 
   {
-    id:2, name:'Schladminger Tauern Höhenweg', region:'Steiermark',
-    tagline:'Bergmeren, lariksbossen en rustige hoogvlakten in de Niedere Tauern',
+    id:2, name:'Schladminger Tauern Höhenweg', region:'Niedere Tauern, Steiermark, Oostenrijk',
+    tagline:'Bergmeren en stille hoogvlakten in de Tauern',
     character:'Groen · bergmeren · rustiger', landscape:'Lariksbossen · meren · rotsige kammen',
     heroImg:'https://commons.wikimedia.org/wiki/Special:FilePath/Giglachseen_-_panoramio_-_Tobias_Luksch.jpg?width=1400',
     cardImg:'https://commons.wikimedia.org/wiki/Special:FilePath/Giglachseen_-_panoramio_-_Tobias_Luksch.jpg?width=600',
-    difficulty:'4/6', vanUtrecht:'~1.250 km', totaalKm:'~69 km', totaalStijging:'~8.750 hm',
-    transport:'Trein naar Schladming', startEnd:'Schladming ↔ Schladming',
+    difficulty:'4/6', vanUtrecht:'1010 km', totaalKm:'69 km', totaalStijging:'8.750 m',
+    transport:'Utrecht – Schladming · 1010 km', driveTime:'10:20 uur', startEnd:'Schladming ↔ Schladming',
     days:[
       { day:1, challenge:false,
         title:'Schladming → Preintalerhütte',
@@ -115,13 +115,13 @@ const routes = [
   },
 
   {
-    id:3, name:'Alta Via 1 – Dolomieten', region:'Dolomieten, Zuid-Tirol (Italië)',
+    id:3, name:'Alta Via 1 – Dolomieten', region:'Dolomieten, Zuid-Tirol, Italië',
     tagline:'De klassiekste huttentocht van de Dolomieten',
     character:'Spectaculair · UNESCO', landscape:'Bergmeer · Fanes · Cinque Torri · Croda da Lago',
     heroImg:'https://commons.wikimedia.org/wiki/Special:FilePath/Lago_di_Braies_in_agosto_02.JPG?width=1400',
     cardImg:'https://commons.wikimedia.org/wiki/Special:FilePath/Lago_di_Braies_in_agosto_02.JPG?width=600',
-    difficulty:'4/6', vanUtrecht:'~1.200 km', totaalKm:'~72 km', totaalStijging:'~9.700 hm',
-    transport:'Trein → Dobbiaco, shuttle → Lago di Braies · Terug: bus Cortina → Dobbiaco',
+    difficulty:'4/6', vanUtrecht:'1027 km', totaalKm:'72 km', totaalStijging:'9.700 m',
+    transport:'Utrecht – Lago di Braies · 1027 km', driveTime:'11:30 uur',
     startEnd:'Lago di Braies → Cortina d\u0027Ampezzo',
     days:[
       { day:1, challenge:false,
@@ -173,13 +173,13 @@ const routes = [
   },
 
   {
-    id:4, name:'Berner Oberland Höhenweg', region:'Berner Oberland, Zwitserland',
-    tagline:'Eiger, Mönch en Jungfrau in één magistrale traversa',
+    id:4, name:'Berner Oberland Höhenweg', region:'Berner Alpen, Berner Oberland, Zwitserland',
+    tagline:'Eiger, Mönch en Jungfrau in één traversa',
     character:'UNESCO · Panoramisch · Rotsige pasovergangen', landscape:'Bachalpsee · Lauterbrunnen-watervalvallei · Sefinenfurke · Blüemlisalphütte · Oeschinensee',
     heroImg:'https://commons.wikimedia.org/wiki/Special:FilePath/Bachalpsee_mit_Schreckhorn.jpg?width=1400',
     cardImg:'https://commons.wikimedia.org/wiki/Special:FilePath/Bachalpsee_mit_Schreckhorn.jpg?width=600',
-    difficulty:'4/6', vanUtrecht:'~850 km', totaalKm:'~70 km', totaalStijging:'~9.500 hm',
-    transport:'Trein → Interlaken Ost → Grindelwald · Terug: trein vanuit Kandersteg',
+    difficulty:'4/6', vanUtrecht:'870 km', totaalKm:'70 km', totaalStijging:'9.500 m',
+    transport:'Utrecht – Grindelwald · 870 km', driveTime:'09:00 uur',
     startEnd:'Grindelwald → Kandersteg',
     days:[
       { day:1, challenge:false,
@@ -231,13 +231,13 @@ const routes = [
   },
 
   {
-    id:5, name:'Julische Alpen – Triglav', region:'Triglav Nationaal Park, Slovenië',
+    id:5, name:'Julische Alpen – Triglav', region:'Julische Alpen, Triglav NP, Slovenië',
     tagline:'Beklim het nationaal symbool van Slovenië',
-    character:'Avontuurlijk · Via ferrata · Sloveens nationaal symbool', landscape:'Vršič-pas · Triglav-noordwand · Zevenmerenvallei · Komna-plateau · Bohinjmeer',
+    character:'Avontuurlijk · Kalksteenkarst · Sloveens nationaal symbool', landscape:'Vršič-pas · Triglav-noordwand · Zevenmerenvallei · Komna-plateau · Bohinjmeer',
     heroImg:'https://commons.wikimedia.org/wiki/Special:FilePath/Aljazev_stolp_na_Triglavu.jpg?width=1400',
     cardImg:'https://commons.wikimedia.org/wiki/Special:FilePath/Aljazev_stolp_na_Triglavu.jpg?width=600',
-    difficulty:'5/6', vanUtrecht:'~1.450 km', totaalKm:'~70 km', totaalStijging:'~6.650 hm',
-    transport:'Vliegtuig/trein → Ljubljana · bus naar Kranjska Gora · Terug: bus vanuit Bohinj',
+    difficulty:'4/6', vanUtrecht:'1135 km', totaalKm:'70 km', totaalStijging:'6.650 m',
+    transport:'Utrecht – Kranjska Gora · 1135 km', driveTime:'11:53 uur',
     startEnd:'Kranjska Gora → Bohinj',
     days:[
       { day:1, challenge:false,
@@ -254,8 +254,8 @@ const routes = [
         from:'Pogačnikov dom (2.051m)', to:'Dom Planika (2.401m)',
         toShort:'Dom Planika', toAlt:'2.401m',
         distance:'~12 km', elevation:'+900m / -650m', time:'8–9 uur',
-        terrain:'Triglav (2.864m) · Aljažev stolp · via ferrata passages · hoogste top van Slovenië',
-        desc:'De meest iconische dag: beklimming van de Triglav (2.864m), het nationaal symbool van Slovenië. Via de Bamberg-route klimt u langs via ferrata-passages en kalksteenruggen naar de top. De Aljažev stolp — een ijzeren cilinder uit 1895 — markeert de plek. Elk jaar beklimmen duizenden Slovenen hun nationale berg als levensdoel.',
+        terrain:'Triglav (2.864m) · Aljažev stolp · vaste kettingen · hoogste top van Slovenië',
+        desc:'De meest iconische dag: beklimming van de Triglav (2.864m), het nationaal symbool van Slovenië. Via de standaardroute met vaste kettingen en ijzeren pinnen — geen via ferrata vereist. De Aljažev stolp — een ijzeren cilinder uit 1895 — markeert de top. Elk jaar beklimmen duizenden Slovenen hun nationale berg als levensdoel.',
         img:'https://commons.wikimedia.org/wiki/Special:FilePath/Aljazev_stolp_na_Triglavu.jpg?width=700',
         imgCaption:'De Aljažev stolp op de top van Triglav (2.864m) — het dak van Slovenië'},
       { day:3, challenge:false,
@@ -286,6 +286,63 @@ const routes = [
         img:'https://commons.wikimedia.org/wiki/Special:FilePath/Bohinj-jezero-Naklova_glava.JPG?width=700',
         imgCaption:'Het Bohinjmeer — het schilderachtige eindpunt van de Triglav-traversa'},
     ]
+  },
+
+  {
+    id:6, name:'Tour du Queyras', region:'Queyras, Hautes-Alpes, Frankrijk',
+    tagline:'Turquoise meren en het hoogste Alpendorp',
+    character:'Zonnig · Kleurrijke geologie · Mediterraans-Alpien', landscape:'Lac Sainte-Anne · Saint-Véran · Col Vieux · Guil-kloven · Château-Queyras',
+    heroImg:'https://commons.wikimedia.org/wiki/Special:FilePath/Lac_Sainte-Anne.jpg?width=1400',
+    cardImg:'https://commons.wikimedia.org/wiki/Special:FilePath/Lac_Sainte-Anne.jpg?width=600',
+    difficulty:'4/6', vanUtrecht:'1178 km', totaalKm:'75 km', totaalStijging:'6.100 m',
+    transport:'Utrecht – Guillestre · 1178 km', driveTime:'13:30 uur', startEnd:'Guillestre ↔ Guillestre',
+    days:[
+      { day:1, challenge:false,
+        title:'Guillestre → Ceillac',
+        from:'Guillestre (1.000m)', to:'Ceillac (1.640m)',
+        toShort:'Ceillac', toAlt:'1.640m',
+        distance:'~15 km', elevation:'+850m / -200m', time:'5–6 uur',
+        terrain:'Mélézet-dal · lariksbossen · Queyras-kalksteenpieken · dorpskerk',
+        desc:'Een vriendelijke openingsdag door het weelderige Mélézet-dal, waar lariksbossen en bloemenrijke alpenweiden de toon zetten. Langzaam stijg je naar Ceillac (1.640m), een pittoresk bergdorp met een romaanse kerk en eerste uitzichten op het kleurrijke Queyras-massief — een ideale introductie tot dit verrassende stuk van de Franse Alpen.',
+        img:'https://commons.wikimedia.org/wiki/Special:FilePath/Le_village_de_Ceillac_en_ao%C3%BBt_2008.jpg?width=700',
+        imgCaption:'Ceillac (1.640m) — eerste halte in het zonnige Queyras-park'},
+      { day:2, challenge:true,
+        title:'⚡ Ceillac → Refuge de la Blanche via Lac Sainte-Anne (UITDAGINGSDAG)',
+        from:'Ceillac (1.640m)', to:'Refuge de la Blanche (2.490m)',
+        toShort:'Refuge de la Blanche', toAlt:'2.490m',
+        distance:'~13 km', elevation:'+1.050m / -200m', time:'8–9 uur',
+        terrain:'Lac Sainte-Anne (2.415m) · middeleeuwse kapel · hoge alpiene grasvlakten · steil',
+        desc:'De dag waar de Queyras zijn troef uitspeelt: het Lac Sainte-Anne op 2.415m, een intens turquoise bergmeer met een middeleeuwse kapel op de oever — een van de meest fotogenieke plekken van de Franse Alpen. De klim is steil maar constant lonend, met vergezichten die bij elke bocht groter worden. Aankomst bij het hoog gelegen Refuge de la Blanche.',
+        img:'https://commons.wikimedia.org/wiki/Special:FilePath/Lac_Sainte-Anne.jpg?width=700',
+        imgCaption:'Lac Sainte-Anne (2.415m) met middeleeuwse kapel — het hoogtepunt van de Queyras-tocht'},
+      { day:3, challenge:false,
+        title:'Refuge de la Blanche → Refuge Agnel via Col Vieux',
+        from:'Refuge de la Blanche (2.490m)', to:'Refuge Agnel (2.600m)',
+        toShort:'Refuge Agnel', toAlt:'2.600m',
+        distance:'~14 km', elevation:'+650m / -550m', time:'6–7 uur',
+        terrain:'Col Vieux (2.806m) · Frans-Italiaanse grens · kleurrijke gesteenten · hoog plateau',
+        desc:'Via het Col Vieux (2.806m), het hoogste punt van de tocht, met een spectaculair panorama over de Italiaanse Alpen en de Col Agnel. De Queyras toont hier zijn meest bijzondere karakter: gesteenten in rood, groen en zwart — een geologisch spektakel dat zelfs de meest doorgewinterde wandelaar verrast. Aankomst bij het indrukwekkend hoog gelegen Refuge Agnel.',
+        img:'https://commons.wikimedia.org/wiki/Special:FilePath/D205_route_Col_Agnel.JPG?width=700',
+        imgCaption:'Uitzicht vanuit het Col Agnel-gebied op de Frans-Italiaanse grens'},
+      { day:4, challenge:false,
+        title:'Refuge Agnel → Saint-Véran → Abriès',
+        from:'Refuge Agnel (2.600m)', to:'Abriès (1.540m)',
+        toShort:'Abriès', toAlt:'1.540m',
+        distance:'~18 km', elevation:'+300m / -1.350m', time:'7–8 uur',
+        terrain:'Saint-Véran (2.042m) · hoogste dorp van Europa · zonnige hellingen · Guil-vallei',
+        desc:'De dag passeert Saint-Véran (2.042m), officieel het hoogste bewoonde dorp van Europa. Zondoorschenen houten chalets, middeleeuwse zonnewijzers op elke gevel en een barokke kerk — een levend museum op alpiene hoogte. Daarna een lange, beloonde afdaling langs zonnige lariksbossen naar de Guil-vallei in het vriendelijke Abriès.',
+        img:'https://commons.wikimedia.org/wiki/Special:FilePath/St_V%C3%A9ran_-_entr%C3%A9e.JPG?width=700',
+        imgCaption:'Saint-Véran (2.042m) — het hoogste bewoonde dorp van Europa'},
+      { day:5, challenge:false,
+        title:'Abriès → Château-Queyras → Guillestre (kort)',
+        from:'Abriès (1.540m)', to:'Guillestre (1.000m)',
+        toShort:'Guillestre', toAlt:'1.000m',
+        distance:'~15 km', elevation:'+200m / -750m', time:'4–5 uur',
+        terrain:'Guil-kloven · Château-Queyras (13e eeuw) · Combe du Queyras · terug naar start',
+        desc:'Een waardige afsluiting: langs de spectaculaire Guil-kloven naar het middeleeuwse Château-Queyras, een 13e-eeuws fort op een rotspilaars hoog boven de rivier. Via de Combe du Queyras keer je terug naar Guillestre — met de voldoening van een volledige rondtour door een van de meest onontdekte en zonnige hoeken van de Franse Alpen.',
+        img:'https://commons.wikimedia.org/wiki/Special:FilePath/Ch%C3%A2teau-Queyras_1.JPG?width=700',
+        imgCaption:'Château-Queyras — middeleeuws fort op een rots boven de Guil-kloven'},
+    ]
   }
 ];
 
@@ -298,6 +355,7 @@ const REMOTE_DB_URL = (REMOTE_VOTING.firebaseDatabaseUrl || '').replace(/\/+$/, 
 const VOTE_SYNC_MS = Number(REMOTE_VOTING.pollIntervalMs) > 0
   ? Number(REMOTE_VOTING.pollIntervalMs)
   : 10000;
+const MAX_VOTES_PER_USER = 2;
 
 let votesCache = [];
 let isRefreshingVotes = false;
@@ -316,19 +374,36 @@ function saveVotesToLocalStorage(votes) {
 
 function normalizeVotes(votes) {
   if (!Array.isArray(votes)) return [];
-  const map = new Map();
+  const uniqueByUserRoute = new Map();
   votes.forEach(v => {
     if (!v || typeof v !== 'object') return;
     const name = String(v.name || '').trim();
     const routeId = Number(v.routeId);
     if (!name || !Number.isFinite(routeId)) return;
-    map.set(name.toLowerCase(), {
+    uniqueByUserRoute.set(`${name.toLowerCase()}|${routeId}`, {
       name,
       routeId,
       ts: Number(v.ts) || Date.now(),
     });
   });
-  return Array.from(map.values());
+
+  // Enforce max votes per user while keeping most recent votes.
+  const grouped = new Map();
+  uniqueByUserRoute.forEach(v => {
+    const key = v.name.toLowerCase();
+    if (!grouped.has(key)) grouped.set(key, []);
+    grouped.get(key).push(v);
+  });
+
+  const normalized = [];
+  grouped.forEach(userVotes => {
+    userVotes
+      .sort((a, b) => b.ts - a.ts)
+      .slice(0, MAX_VOTES_PER_USER)
+      .forEach(v => normalized.push(v));
+  });
+
+  return normalized;
 }
 
 function getVotes() {
@@ -342,6 +417,10 @@ function voteKeyFromName(name) {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
     .slice(0, 64) || 'anonymous';
+}
+
+function voteKey(name, routeId) {
+  return `${voteKeyFromName(name)}-${routeId}`;
 }
 
 async function remoteRequest(method, path, body) {
@@ -369,13 +448,17 @@ async function loadVotes() {
 }
 
 async function remoteSetVote(vote) {
-  const key = voteKeyFromName(vote.name);
+  const key = voteKey(vote.name, vote.routeId);
   await remoteRequest('PUT', `${REMOTE_DB_URL}/votes/${key}.json`, vote);
 }
 
-async function remoteDeleteVoteByName(name) {
-  const key = voteKeyFromName(name);
-  await remoteRequest('DELETE', `${REMOTE_DB_URL}/votes/${key}.json`);
+async function remoteDeleteVote(name, routeId) {
+  const key = voteKey(name, routeId);
+  const legacyKey = voteKeyFromName(name);
+  await Promise.all([
+    remoteRequest('DELETE', `${REMOTE_DB_URL}/votes/${key}.json`),
+    remoteRequest('DELETE', `${REMOTE_DB_URL}/votes/${legacyKey}.json`),
+  ]);
 }
 
 function getUsername() {
@@ -384,6 +467,11 @@ function getUsername() {
 
 function saveUsername(name) {
   localStorage.setItem(USERNAME_KEY, name.trim());
+}
+
+function getVotesByUser(name) {
+  if (!name) return [];
+  return getVotes().filter(v => v.name.toLowerCase() === name.toLowerCase());
 }
 
 /* ═══════════════ IMAGE BASE ═══ */
@@ -397,11 +485,10 @@ let currentRoute = null;
 let currentDay   = 1;
 let pendingVoteRouteId = null;
 
-function getUserVotedRouteId() {
+function getUserVotedRouteIds() {
   const name = getUsername();
-  if (!name) return null;
-  const v = getVotes().find(x => x.name.toLowerCase() === name.toLowerCase());
-  return v ? v.routeId : null;
+  if (!name) return [];
+  return getVotesByUser(name).map(v => v.routeId);
 }
 
 async function castOrToggleVote(routeId) {
@@ -409,28 +496,29 @@ async function castOrToggleVote(routeId) {
   if (!name) { pendingVoteRouteId = routeId; openNameModal(false); return; }
 
   try {
-    const existing = getVotes().find(x => x.name.toLowerCase() === name.toLowerCase());
+    const userVotes = getVotesByUser(name);
+    const existingOnRoute = userVotes.find(v => v.routeId === routeId);
 
     if (REMOTE_ENABLED) {
-      if (existing && existing.routeId === routeId) {
-        await remoteDeleteVoteByName(name);
+      if (existingOnRoute) {
+        await remoteDeleteVote(name, routeId);
       } else {
+        if (userVotes.length >= MAX_VOTES_PER_USER) {
+          alert(`Je mag maximaal ${MAX_VOTES_PER_USER} stemmen uitbrengen.`);
+          return;
+        }
         await remoteSetVote({ name, routeId, ts: Date.now() });
       }
       await loadVotes();
     } else {
       let votes = [...getVotes()];
-      if (existing) {
-        if (existing.routeId === routeId) {
-          votes = votes.filter(x => x.name.toLowerCase() !== name.toLowerCase());
-        } else {
-          votes = votes.map(v => (
-            v.name.toLowerCase() === name.toLowerCase()
-              ? { ...v, routeId, ts: Date.now() }
-              : v
-          ));
-        }
+      if (existingOnRoute) {
+        votes = votes.filter(v => !(v.name.toLowerCase() === name.toLowerCase() && v.routeId === routeId));
       } else {
+        if (userVotes.length >= MAX_VOTES_PER_USER) {
+          alert(`Je mag maximaal ${MAX_VOTES_PER_USER} stemmen uitbrengen.`);
+          return;
+        }
         votes.push({ name, routeId, ts: Date.now() });
       }
       votesCache = normalizeVotes(votes);
@@ -474,7 +562,7 @@ function openNameModal(isRename) {
   const btn   = document.getElementById('modal-confirm-btn');
   if (isRename) {
     title.textContent = 'Naam wijzigen';
-    sub.textContent   = 'Pas je naam aan. Je stem blijft bewaard.';
+    sub.textContent   = 'Pas je naam aan. Je stemmen blijven bewaard.';
     btn.textContent   = 'Opslaan';
     input.value       = getUsername();
   } else {
@@ -503,10 +591,10 @@ async function modalConfirm() {
   try {
     if (queuedRouteId === null && oldName && oldName !== name) {
       if (REMOTE_ENABLED) {
-        const existing = getVotes().find(x => x.name.toLowerCase() === oldName.toLowerCase());
-        if (existing) {
-          await remoteDeleteVoteByName(oldName);
-          await remoteSetVote({ ...existing, name, ts: Date.now() });
+        const existingVotes = getVotesByUser(oldName);
+        if (existingVotes.length > 0) {
+          await Promise.all(existingVotes.map(v => remoteDeleteVote(oldName, v.routeId)));
+          await Promise.all(existingVotes.map(v => remoteSetVote({ ...v, name, ts: Date.now() })));
           await loadVotes();
         }
       } else {
@@ -542,7 +630,7 @@ async function modalConfirm() {
 function updateVoteUI() {
   const votes    = getVotes();
   const username = getUsername();
-  const myVote   = getUserVotedRouteId();
+  const myVotes  = new Set(getUserVotedRouteIds());
 
   // Nav name label
   const nameLabel = document.getElementById('nav-name-label');
@@ -550,7 +638,7 @@ function updateVoteUI() {
 
   // Update each card
   routes.forEach(r => {
-    const isMine = myVote === r.id;
+    const isMine = myVotes.has(r.id);
 
     const badge = document.getElementById(`voted-badge-${r.id}`);
     const btn   = document.getElementById(`vote-btn-${r.id}`);
@@ -658,8 +746,8 @@ function showRoute(id) {
       <div><div class="meta-item-label">Route</div><div class="meta-item-val">${currentRoute.startEnd}</div></div></div>
     <div class="meta-item"><i class="fas fa-mountain"></i>
       <div><div class="meta-item-label">Moeilijkheid</div><div class="meta-item-val">${currentRoute.difficulty}</div></div></div>
-    <div class="meta-item"><i class="fas fa-bus"></i>
-      <div><div class="meta-item-label">Vervoer</div><div class="meta-item-val">${currentRoute.transport}</div></div></div>
+    <div class="meta-item"><i class="fas fa-car"></i>
+      <div><div class="meta-item-label">Rijafstand</div><div class="meta-item-val">${currentRoute.transport}${currentRoute.driveTime ? ` · ${currentRoute.driveTime}` : ''}</div></div></div>
     <div class="meta-item"><i class="fas fa-bolt" style="color:#e74c3c"></i>
       <div><div class="meta-item-label">Uitdagingsdag</div>
       <div class="meta-item-val" style="color:#c0392b">Dag ${currentRoute.days.find(d=>d.challenge).day}</div></div></div>`;
@@ -672,7 +760,7 @@ function showRoute(id) {
 
   document.getElementById('day-panels').innerHTML = currentRoute.days.map(d => `
     <div class="day-panel${d.day===1?' active':''}" id="panel-${d.day}">
-      ${d.challenge?`<div class="challenge-badge"><i class="fas fa-bolt"></i> UITDAGINGSDAG · ≥1.500 hm · secties 30–40%</div>`:''}
+      ${d.challenge?`<div class="challenge-badge"><i class="fas fa-bolt"></i> UITDAGINGSDAG · ≥1.500 m · secties 30–40%</div>`:''}
       <div class="day-header">
         <div class="day-number">${d.day}</div>
         <div class="day-title-block">
