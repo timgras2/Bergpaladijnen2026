@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -33,17 +34,16 @@
       <div class="hero-overlay"></div>
       <div class="hero-content">
         <p class="eyebrow">27 juni - 4 juli · Zillertaler Alpen</p>
-        <h1>Berliner Höhenweg: het gekozen reisplan</h1>
+        <h1>Berliner Höhenweg</h1>
         <p class="hero-copy">Acht dagen onderweg: eerst landen in Mayrhofen, daarna vijf bergetappes langs Edelhütte, Kasseler Hütte, Greizer Hütte en Berliner Hütte, met een zachte landing bij Gramai Alm en Nürnberg.</p>
         <div class="hero-actions">
           <a class="primary-btn" href="#dagen"><i class="fas fa-route" aria-hidden="true"></i> Bekijk dag voor dag</a>
-          <a class="ghost-btn" href="Reisplan-bergpaladijnen-2026.md"><i class="fas fa-file-lines" aria-hidden="true"></i> Origineel reisplan</a>
         </div>
       </div>
       <aside class="hero-panel" aria-label="Samenvatting">
         <div>
           <span class="panel-label">Huttenroute</span>
-          <strong>Mayrhofen naar Stilluptal</strong>
+          <strong>Mayrhofen naar Breitlahner</strong>
         </div>
         <div>
           <span class="panel-label">Zwaarste dag</span>
@@ -58,8 +58,8 @@
 
     <section class="quick-stats" aria-label="Reissamenvatting">
       <div class="quick-stat"><span>8</span><small>dagen totaal</small></div>
-      <div class="quick-stat"><span>5</span><small>wandeletappes</small></div>
-      <div class="quick-stat"><span>4</span><small>alpiene overnachtingen</small></div>
+      <div class="quick-stat"><span>50,9 km</span><small>hikeafstand</small></div>
+      <div class="quick-stat"><span>7.220 m</span><small>hoogtemeters</small></div>
       <div class="quick-stat"><span>2.880 m</span><small>hoogste paszone</small></div>
       <div class="quick-stat"><span>rood/zwart</span><small>bergpadkarakter</small></div>
     </section>
@@ -69,29 +69,13 @@
       <div class="route-layout">
         <div>
           <h2>Van dal naar graat, gletsjerkom en watervaldal.</h2>
-          <p>De route pakt de Berliner Höhenweg aan vanaf Mayrhofen en loopt bewust met een korte acclimatisatie naar de Karl-von-Edelhütte. Daarna volgen drie serieuze hoogalpiene dagen met de Siebenschneidenweg, Lapenscharte en Mörchenscharte voordat de groep via het Stilluptal terug naar comfort rolt.</p>
+          <p>De route pakt de Berliner Höhenweg aan vanaf Mayrhofen en loopt bewust met een korte acclimatisatie naar de Karl-von-Edelhütte. Daarna volgen drie serieuze hoogalpiene dagen met de Siebenschneidenweg, Lapenscharte en Mörchenscharte voordat de groep via het Zemmgrund terug naar comfort rolt.</p>
         </div>
-        <div class="route-map" aria-label="Routekaart op basis van hutcoördinaten">
-          <svg class="route-svg" viewBox="0 0 100 100" role="img" aria-label="Mayrhofen naar Edelhütte, Kasseler Hütte, Greizer Hütte, Berliner Hütte en Stilluptal">
-            <defs>
-              <linearGradient id="routeGradient" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#e2b84c"/>
-                <stop offset=".55" stop-color="#3f7b4b"/>
-                <stop offset="1" stop-color="#a64e2d"/>
-              </linearGradient>
-            </defs>
-            <polyline class="route-shadow" points="42,5 61,28 93,72 54,82 8,94 59,61" />
-            <polyline class="route-track" points="42,5 61,28 93,72 54,82 8,94 59,61" />
-            <polyline class="return-track" points="59,61 42,5" />
-          </svg>
-          <div class="map-point active label-right" style="--x:42%; --y:5%"><span>Mayrhofen</span></div>
-          <div class="map-point label-right" style="--x:61%; --y:28%"><span>Edelhütte</span></div>
-          <div class="map-point danger label-left" style="--x:93%; --y:72%"><span>Kasseler</span></div>
-          <div class="map-point label-top" style="--x:54%; --y:82%"><span>Greizer</span></div>
-          <div class="map-point label-right" style="--x:8%; --y:94%"><span>Berliner</span></div>
-          <div class="map-point finish label-left" style="--x:59%; --y:61%"><span>Stilluptal</span></div>
-          <div class="map-note">Relatieve ligging op basis van hutcoördinaten · stippellijn = taxi/bus terug</div>
-          <div class="map-north">N</div>
+        <div class="route-map" id="total-route-map" aria-label="Interactieve kaart van de totale route">
+          <div class="route-map-fallback">
+            <strong>Mayrhofen → Edelhütte → Kasseler Hütte → Greizer Hütte → Berliner Hütte → Alpengasthaus Breitlahner</strong>
+            <span>Kaart wordt geladen via OpenStreetMap. Exacte dagtracks staan in de Komoot-routes.</span>
+          </div>
         </div>
       </div>
     </section>
@@ -102,7 +86,7 @@
           <div class="section-kicker">Dag tot dag</div>
           <h2>Het hele reisplan</h2>
         </div>
-        <p>Elke wandeldag linkt direct naar de geplande Komoot-route. Komoot blokkeert planner-links in iframes; zodra de routes als openbare tours zijn opgeslagen, kan hier de officiële embed-URL in.</p>
+        <p>Elke wandeldag bevat een officiële Komoot-embed met kaart, statistieken en hoogteprofiel. Als Komoot tijdelijk niet laadt, blijft de directe routeknop beschikbaar.</p>
       </div>
 
       <article class="day-card travel-day" id="dag-0">
@@ -112,11 +96,11 @@
         <div class="day-body">
           <div class="day-date">Dag 0 · zaterdag 27 juni</div>
           <h3>Nederland → Mayrhofen</h3>
-          <p>Reisdag naar het Zillertal. De tocht begint rustig in Mayrhofen, zodat iedereen de bergen in kan schakelen voor de eerste huttennacht.</p>
+          <p>Reisdag naar het Zillertal. De tocht begint rustig in Mayrhofen (dus niet teveel bier), zodat iedereen een met de bergen kan worden voor de eerste huttennacht.</p>
           <div class="metric-grid">
-            <span class="metric"><b>reisdag</b><small>Nederland → Tirol</small></span>
-            <span class="metric"><b>6290</b><small>Mayrhofen</small></span>
-            <span class="metric"><b>4★</b><small>hotelstart</small></span>
+            <span class="metric"><b>Reisdag</b><small>Nederland → Tirol</small></span>
+            <span class="metric"><b>Aankomst</b><small>Mayrhofen</small></span>
+            <span class="metric"><b>★★★★</b><small>Hotel</small></span>
           </div>
           <a class="source-link" href="https://www.alpenhof-kristall.at/home.html">Alpenhof Kristall</a>
         </div>
@@ -124,57 +108,49 @@
 
       <article class="day-card" id="dag-1">
         <div class="day-media">
-          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Karl-von-Edel-Huette.jpg?width=1200" alt="Karl-von-Edelhütte boven Mayrhofen" referrerpolicy="no-referrer">
+          <img src="https://img2.oastatic.com/img2/21729453/max/variant.jpg" alt="Karl-von-Edelhütte boven Mayrhofen" referrerpolicy="no-referrer">
         </div>
         <div class="day-body">
           <div class="day-date">Dag 1 · zondag 28 juni</div>
           <h3>Mayrhofen → Karl-von-Edelhütte</h3>
-          <p>De warming-up. Vanuit het dal is dit een stevige klim, maar met de Ahornbahn wordt het een korte instap naar de hut. Ideaal om hoogte, rugzak en ritme te testen zonder direct de benen op te blazen.</p>
-          <div class="komoot-panel" data-embed-src="https://www.komoot.com/tour/2952708804/embed">
-            <div class="komoot-map-preview">
-              <span class="komoot-brand">komoot</span>
-              <strong>Mayrhofen → Karl-von-Edelhütte</strong>
-              <small>Planner-link · Ahornbahn variant mogelijk</small>
-            </div>
-            <div class="komoot-actions">
-              <a class="komoot-btn" href="https://www.komoot.com/tour/2952708804" target="_blank" rel="noopener noreferrer">
-                <i class="fas fa-map-location-dot" aria-hidden="true"></i> Open route in Komoot
-              </a>
-              <span class="komoot-note">Dag 1 · opgeslagen Komoot Tour</span>
-            </div>
-          </div>
+          <p>De warming-up. De afstand valt mee maar vanuit het dal is dit een stevige klim. Ideaal om hoogte, rugzak en ritme te testen zonder direct de benen op te blazen.</p>
           <div class="terrain-tags">
-            <span>acclimatisatie</span><span>Ahornspitze uitzicht</span><span>huttenstart</span>
+            <span>alpenweides</span><span>Zillertalpanorama</span><span>huttenpad</span>
           </div>
           <a class="source-link" href="https://www.alpenverein.de/files/1502-zillertaler-runde-broschuere_ol.pdf">DAV Zillertaler Runde brochure</a>
+        </div>
+        <div class="komoot-panel day-route-embed has-embed">
+          <iframe src="https://www.komoot.com/nl-nl/tour/2952708804/embed?share_token=amS6PShZGsR103MSO5VAfHVL6xBlzNLzPYLi0CayyPl1ySSKWJ&amp;layout=classic&amp;profile=1" width="100%" height="700" frameborder="0" scrolling="no"></iframe>
+          <div class="komoot-actions">
+            <a class="komoot-btn" href="https://www.komoot.com/nl-nl/tour/2952708804?share_token=amS6PShZGsR103MSO5VAfHVL6xBlzNLzPYLi0CayyPl1ySSKWJ&amp;ref=wtd&amp;t_s=referral&amp;t_cid=route_share&amp;t_ref_username=1165416276276" target="_blank" rel="noopener noreferrer">
+              <i class="fas fa-map-location-dot" aria-hidden="true"></i> Open route in Komoot
+            </a>
+            <span class="komoot-note">Dag 1 · opgeslagen Komoot Tour</span>
+          </div>
         </div>
       </article>
 
       <article class="day-card challenge" id="dag-2">
         <div class="day-media">
-          <img src="https://images.contenthub.dev/390osprlshgj/27b08207ff1184e106b6a725e44ac557/mhf-sommer-wandern-berliner-hoehenweg-zillertal-bild-christian-penning.jpg?w=1400" alt="Siebenschneidenweg richting Kasseler Hütte" referrerpolicy="no-referrer">
+          <img src="https://www.zillertal.net/images/sommer/ausflugsziele/kasseler_huette/Kasseler_Huette.jpg" alt="Siebenschneidenweg richting Kasseler Hütte" referrerpolicy="no-referrer">
         </div>
         <div class="day-body">
           <div class="day-date">Dag 2 · maandag 29 juni</div>
           <h3>Karl-von-Edelhütte → Kasseler Hütte</h3>
-          <p>De koninginnerit: de Aschaffenburger Höhenweg, beter bekend als de Siebenschneidenweg. Zeven ruggen, blokkenvelden, steile grashangen en stukken met staalkabels. Dit is de dag voor vroeg ontbijt, stabiel weer en geconcentreerd lopen.</p>
-          <div class="komoot-panel" data-embed-src="https://www.komoot.com/tour/2952709329/embed">
-            <div class="komoot-map-preview">
-              <span class="komoot-brand">komoot</span>
-              <strong>Karl-von-Edelhütte → Kasseler Hütte</strong>
-              <small>Siebenschneidenweg · zwaarste etappe</small>
-            </div>
-            <div class="komoot-actions">
-              <a class="komoot-btn" href="https://www.komoot.com/tour/2952709329" target="_blank" rel="noopener noreferrer">
-                <i class="fas fa-map-location-dot" aria-hidden="true"></i> Open route in Komoot
-              </a>
-              <span class="komoot-note">Dag 2 · opgeslagen Komoot Tour</span>
-            </div>
-          </div>
+          <p>Deze lange etappe is misschien wel de meest uitdagende etappe van de hele Berliner Hohenweg. Niet per se omdat het veel hoogtemeters of kilometers is, maar wel door het terrein waar je door loopt. Dit is de dag voor vroeg ontbijt en geconcentreerd lopen.</p>
           <div class="terrain-tags">
-            <span>zwarte passages</span><span>staalkabels</span><span>geen snelle noodafdaling</span>
+            <span>graattraverses</span><span>staalkabels</span><span>rotsblokken</span>
           </div>
           <a class="source-link" href="https://www.kasseler-huette.at/tourenvorschlaege">Kasseler Hütte · Tourenvorschläge</a>
+        </div>
+        <div class="komoot-panel day-route-embed has-embed">
+          <iframe src="https://www.komoot.com/nl-nl/tour/2952709329/embed?share_token=aKl7nU0YXJzfeHmSbGGCM8eMCzj1ssWlQPo8Th28zopRTrjfbQ&amp;layout=classic&amp;profile=1" width="100%" height="700" frameborder="0" scrolling="no"></iframe>
+          <div class="komoot-actions">
+            <a class="komoot-btn" href="https://www.komoot.com/nl-nl/tour/2952709329?share_token=aKl7nU0YXJzfeHmSbGGCM8eMCzj1ssWlQPo8Th28zopRTrjfbQ" target="_blank" rel="noopener noreferrer">
+              <i class="fas fa-map-location-dot" aria-hidden="true"></i> Open route in Komoot
+            </a>
+            <span class="komoot-note">Dag 2 · opgeslagen Komoot Tour</span>
+          </div>
         </div>
       </article>
 
@@ -185,80 +161,68 @@
         <div class="day-body">
           <div class="day-date">Dag 3 · dinsdag 30 juni</div>
           <h3>Kasseler Hütte → Greizer Hütte via Lapenscharte</h3>
-          <p>Een compacte maar serieuze pasovergang. De Lapenscharte trekt het terrein omhoog naar blokken en steile afdalingen; de Elsenklamm en brugpassages houden de dag alpien tot vlak voor de hut.</p>
-          <div class="komoot-panel" data-embed-src="https://www.komoot.com/tour/2952709542/embed">
-            <div class="komoot-map-preview">
-              <span class="komoot-brand">komoot</span>
-              <strong>Kasseler Hütte → Greizer Hütte</strong>
-              <small>Via Lapenscharte en Floitental</small>
-            </div>
-            <div class="komoot-actions">
-              <a class="komoot-btn" href="https://www.komoot.com/tour/2952709542" target="_blank" rel="noopener noreferrer">
-                <i class="fas fa-map-location-dot" aria-hidden="true"></i> Open route in Komoot
-              </a>
-              <span class="komoot-note">Dag 3 · opgeslagen Komoot Tour</span>
-            </div>
-          </div>
+          <p>Een compacte maar serieuze pasovergang. De Lapenscharte is net Mordor en trekt het terrein omhoog naar blokhellingen en steile afdalingen; de Elsenklamm en brugpassages houden de dag lekker hoog tot vlak voor de hut, waar het tijd is voor een klein feestje.</p>
           <div class="terrain-tags">
-            <span>Lapenscharte</span><span>blokterrein</span><span>beveiligde kloof</span>
+            <span>pasovergang</span><span>Elsenklamm</span><span>brugpassages</span>
           </div>
           <a class="source-link" href="https://www.tirol.at/aktivitaeten/sport/wandern/wandertouren/berliner-hoehenweg-berliner-huette-greizer-huette">Tirol · Etappe Greizer/Kasseler context</a>
+        </div>
+        <div class="komoot-panel day-route-embed has-embed">
+          <iframe src="https://www.komoot.com/nl-nl/tour/2952709542/embed?share_token=aCrtFDDWAE45WVOJQfb7ykRhbjhlVe6KANwEvctOMHuTbS6FRA&amp;layout=classic&amp;profile=1" width="100%" height="700" frameborder="0" scrolling="no"></iframe>
+          <div class="komoot-actions">
+            <a class="komoot-btn" href="https://www.komoot.com/nl-nl/tour/2952709542?share_token=aCrtFDDWAE45WVOJQfb7ykRhbjhlVe6KANwEvctOMHuTbS6FRA" target="_blank" rel="noopener noreferrer">
+              <i class="fas fa-map-location-dot" aria-hidden="true"></i> Open route in Komoot
+            </a>
+            <span class="komoot-note">Dag 3 · opgeslagen Komoot Tour</span>
+          </div>
         </div>
       </article>
 
       <article class="day-card" id="dag-4">
         <div class="day-media">
-          <img src="https://dav-berlin.de/wp-content/uploads/IMG_8331.jpeg" alt="Berliner Hütte tussen de gletsjers" referrerpolicy="no-referrer">
+          <img src="https://genboeckpr.de/wp-content/uploads/2017/05/BerlinerH%C3%BCtte_Zillertal_TirolWerbung_918567.jpg" alt="Berliner Hütte tussen de gletsjers" referrerpolicy="no-referrer">
         </div>
         <div class="day-body">
           <div class="day-date">Dag 4 · woensdag 1 juli</div>
           <h3>Greizer Hütte → Berliner Hütte</h3>
-          <p>Rood/zwart bergpad met het volle hoogalpiene pakket: Schwarzsee, uitzicht op Großer Möseler en Turnerkamp, steile afdalingen met kabels en ladders, en daarna aankomen in de monumentale Berliner Hütte.</p>
-          <div class="komoot-panel" <iframe src="https://www.komoot.com/nl-nl/tour/2952710129/embed?share_token=aYzwp1ufY3N3g25noiDMKujVxapUYOYA9HKbCceZnvEsYrEG17&amp;layout=classic&amp;profile=1" width="100%" height="700" frameborder="0" scrolling="no"></iframe>
-            <div class="komoot-map-preview">
-              <span class="komoot-brand">komoot</span>
-              <strong>Greizer Hütte → Berliner Hütte</strong>
-              <small>Mörchenscharte · Schwarzsee · kabelpassages</small>
-            </div>
-            <div class="komoot-actions">
-              <a class="komoot-btn" href="https://www.komoot.com/tour/2952709906" target="_blank" rel="noopener noreferrer">
-                <i class="fas fa-map-location-dot" aria-hidden="true"></i> Open route in Komoot
-              </a>
-              <span class="komoot-note">Dag 4 · opgeslagen Komoot Tour</span>
-            </div>
-          </div>
+          <p>Rood/zwart bergpad met het volle hoogalpiene pakket: Schwarzsee, uitzicht op Großer Möseler en Turnerkamp, steile afdalingen met kabels en ladders, en flink wat hoogtemeters. Maar daarna mogen we ons laten fêteren in de monumentale Berliner Hütte.</p>
           <div class="terrain-tags">
-            <span>Mörchenscharte</span><span>kabels en ladders</span><span>gletsjerpanorama</span>
+            <span>bergmeer</span><span>ladders en kabels</span><span>gletsjerpanorama</span>
           </div>
           <a class="source-link" href="https://www.tirol.at/aktivitaeten/sport/wandern/wandertouren/berliner-hoehenweg-berliner-huette-greizer-huette">Tirol · Berliner Hütte - Greizer Hütte</a>
+        </div>
+        <div class="komoot-panel day-route-embed has-embed">
+          <iframe src="https://www.komoot.com/nl-nl/tour/2952709906/embed?share_token=aM4gzYEjNmiagtSAsVwFSAWe16rL1bhHu0FxbEHZUtSUIWFR85&amp;layout=classic&amp;profile=1" width="100%" height="700" frameborder="0" scrolling="no"></iframe>
+          <div class="komoot-actions">
+            <a class="komoot-btn" href="https://www.komoot.com/nl-nl/tour/2952709906?share_token=aM4gzYEjNmiagtSAsVwFSAWe16rL1bhHu0FxbEHZUtSUIWFR85" target="_blank" rel="noopener noreferrer">
+              <i class="fas fa-map-location-dot" aria-hidden="true"></i> Open route in Komoot
+            </a>
+            <span class="komoot-note">Dag 4 · opgeslagen Komoot Tour</span>
+          </div>
         </div>
       </article>
 
       <article class="day-card" id="dag-5">
         <div class="day-media">
-          <img src="https://www.achensee.com/uploads/tx_webxbookingemo/ImageStorage/Gramai-Alm_33445dd4d48f90f5c3fe37def5c0b0f6.jpg" alt="Stilluptal en Zillertaler daluitloop" referrerpolicy="no-referrer">
+          <img src="https://www.achensee.com/uploads/tx_webxbookingemo/ImageStorage/Gramai-Alm_33445dd4d48f90f5c3fe37def5c0b0f6.jpg" alt="Gramai Alm na de uitloop door het Zemmgrund" referrerpolicy="no-referrer">
         </div>
         <div class="day-body">
           <div class="day-date">Dag 5 · donderdag 2 juli</div>
-          <h3>Berliner Hütte → Stilluptal → Gramai Alm</h3>
-          <p>De uitloopdag: vooral dalen via bergpad en dalroute richting Stilluptal, daarna bus of taxi terug naar Mayrhofen. In de middag schakelt de reis van expeditie naar herstelmodus bij Gramai Alm aan de Achensee.</p>
-          <div class="komoot-panel" data-embed-src="https://www.komoot.com/tour/2952710129/embed">
-            <div class="komoot-map-preview">
-              <span class="komoot-brand">komoot</span>
-              <strong>Berliner Hütte → Stilluptal</strong>
-              <small>Uitloopdag · taxi/bus terug naar Mayrhofen</small>
-            </div>
-            <div class="komoot-actions">
-              <a class="komoot-btn" href="https://www.komoot.com/tour/2952710129" target="_blank" rel="noopener noreferrer">
-                <i class="fas fa-map-location-dot" aria-hidden="true"></i> Open route in Komoot
-              </a>
-              <span class="komoot-note">Dag 5 · opgeslagen Komoot Tour</span>
-            </div>
-          </div>
+          <h3>Berliner Hütte → Breitlahner → Gramai Alm</h3>
+          <p>De uitloopdag: vooral dalen via bergpad en dalroute door het Zemmgrund naar Alpengasthaus Breitlahner, daarna bus of taxi terug naar Mayrhofen. In de middag schakelt het reisprogramma van expeditie naar herstelmodus waar we heerijk kunnen bijkomen in de prachtige Gramai Alm aan de Achensee.</p>
           <div class="terrain-tags">
-            <span>watervallen</span><span>dalafdaling</span><span>spa-herstel</span>
+            <span>watervallen</span><span>almen</span><span>dalpad</span>
           </div>
           <a class="source-link" href="https://www.achensee.com/en/map-detail/gramai-alm-alpengenuss-natur-spa-114203235/">Achensee · Gramai Alm</a>
+        </div>
+        <div class="komoot-panel day-route-embed has-embed">
+          <iframe src="https://www.komoot.com/nl-nl/tour/2952710129/embed?share_token=aYzwp1ufY3N3g25noiDMKujVxapUYOYA9HKbCceZnvEsYrEG17&amp;layout=classic&amp;profile=1" width="100%" height="700" frameborder="0" scrolling="no"></iframe>
+          <div class="komoot-actions">
+            <a class="komoot-btn" href="https://www.komoot.com/nl-nl/tour/2952710129?share_token=aYzwp1ufY3N3g25noiDMKujVxapUYOYA9HKbCceZnvEsYrEG17" target="_blank" rel="noopener noreferrer">
+              <i class="fas fa-map-location-dot" aria-hidden="true"></i> Open route in Komoot
+            </a>
+            <span class="komoot-note">Dag 5 · opgeslagen Komoot Tour</span>
+          </div>
         </div>
       </article>
 
@@ -269,7 +233,7 @@
         <div class="day-body">
           <div class="day-date">Dag 6 · vrijdag 3 juli</div>
           <h3>Mayrhofen → Nürnberg</h3>
-          <p>Transitdag richting huis, met een comfortabele tussenstop bij Motel One Nürnberg-Hauptbahnhof. Praktisch: naast het station, midden in de stad, en geen hutslippers meer nodig.</p>
+          <p>Transitdag richting huis, met een comfortabele tussenstop bij Motel One Nürnberg-Hauptbahnhof. Midden in de stad, biergartens om de hoek en geen hutslippers meer nodig.</p>
           <div class="metric-grid">
             <span class="metric"><b>stad</b><small>Nürnberg</small></span>
             <span class="metric"><b>Hbf</b><small>naast station</small></span>
@@ -283,7 +247,7 @@
         <div class="day-body">
           <div class="day-date">Dag 7 · zaterdag 4 juli</div>
           <h3>Nürnberg → huis</h3>
-          <p>Laatste reisdag terug naar Nederland. De huttenlijn zit erop; alleen de was en de sterke verhalen blijven over.</p>
+          <p>Laatste reisdag terug naar Nederland. De huttentocht zit erop; alleen de was en de sterke verhalen blijven over.</p>
           <div class="metric-grid">
             <span class="metric"><b>finish</b><small>naar huis</small></span>
             <span class="metric"><b>8 dagen</b><small>rond</small></span>
@@ -326,13 +290,13 @@
     <section id="bronnen" class="sources-section">
       <div class="section-kicker">Bronnen</div>
       <h2>Route- en beeldmateriaal</h2>
-      <p>De belangrijkste externe bronnen voor routekarakter, hoogtecijfers en accommodatiebeelden.</p>
+      <p>De belangrijkste bronnen voor routekarakter, hoogtecijfers en accommodatiebeelden.</p>
       <div class="source-grid">
         <a href="https://www.mayrhofen.at/de/stories/berliner-hoehenweg">Mayrhofen · Berliner Höhenweg</a>
         <a href="https://www.alpenverein.de/files/1502-zillertaler-runde-broschuere_ol.pdf">DAV · Zillertaler Runde brochure</a>
         <a href="https://www.kasseler-huette.at/tourenvorschlaege">Kasseler Hütte · Etappe-info</a>
         <a href="https://www.tirol.at/aktivitaeten/sport/wandern/wandertouren/berliner-hoehenweg-berliner-huette-greizer-huette">Tirol · Berliner/Greizer etappe</a>
-        <a href="https://www.tirol.at/aktivitaeten/sport/wandern/wandertouren/themenwanderung-stilluptal-wasserfallweg">Tirol · Wasserfallweg Stilluptal</a>
+        <a href="https://www.tirol.at/aktivitaeten/sport/wandern/alpengasthaus-breitlahner-berliner-huette">Tirol · Breitlahner - Berliner Hütte</a>
         <a href="https://www.achensee.com/en/map-detail/gramai-alm-alpengenuss-natur-spa-114203235/">Achensee · Gramai Alm</a>
       </div>
     </section>
@@ -340,9 +304,10 @@
 
   <footer class="site-footer">
     <strong>Bergpaladijnen 2026</strong>
-    <span>Weer, sneeuwvelden en hutbezetting blijven leidend. Bij natte omstandigheden tellen de zwarte passages dubbel.</span>
+    <span>Weer, concentratie en humeur blijven leidend. Bij natte omstandigheden tellen de zwarte passages dubbel.</span>
   </footer>
 
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
   <script src="js/app.js" defer></script>
 </body>
 </html>

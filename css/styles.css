@@ -1,17 +1,18 @@
 :root {
-  --ink: #17211d;
-  --muted: #68746d;
-  --line: #d9dfd6;
-  --snow: #fffdf8;
-  --mist: #f4f7f1;
-  --forest: #143829;
-  --fern: #3f7b4b;
-  --glacier: #d9eef0;
-  --rust: #a64e2d;
-  --sun: #e2b84c;
-  --night: #0b1714;
-  --shadow: 0 18px 50px rgba(23, 33, 29, .16);
-  --radius: 8px;
+  --ink: #3d2b1a;
+  --muted: #776b5d;
+  --line: #e3d8c6;
+  --snow: #faf8f4;
+  --mist: #f5f0e8;
+  --forest: #1a3a2a;
+  --fern: #4a7c3f;
+  --glacier: #d7e7e3;
+  --rust: #c0392b;
+  --sun: #d4a830;
+  --night: #102017;
+  --bark: #3d2b1a;
+  --shadow: 0 18px 48px rgba(61, 43, 26, .16);
+  --radius: 14px;
   --nav-h: 68px;
 }
 
@@ -21,7 +22,9 @@ body {
   margin: 0;
   font-family: Inter, system-ui, sans-serif;
   color: var(--ink);
-  background: var(--snow);
+  background:
+    linear-gradient(180deg, rgba(245, 240, 232, .86), rgba(250, 248, 244, .96) 360px),
+    var(--snow);
   overflow-x: hidden;
 }
 
@@ -48,9 +51,9 @@ a { color: inherit; text-decoration: none; }
   gap: 24px;
   padding: 0 clamp(18px, 4vw, 56px);
   color: #fff;
-  background: rgba(11, 23, 20, .76);
-  border-bottom: 1px solid rgba(255, 255, 255, .14);
-  backdrop-filter: blur(18px);
+  background: rgba(26, 58, 42, .9);
+  border-bottom: 1px solid rgba(255, 255, 255, .1);
+  backdrop-filter: blur(14px) saturate(1.35);
 }
 
 .nav-brand,
@@ -61,6 +64,7 @@ a { color: inherit; text-decoration: none; }
 
 .nav-brand {
   gap: 10px;
+  font-family: "Playfair Display", Georgia, serif;
   font-weight: 800;
   letter-spacing: .01em;
 }
@@ -112,8 +116,8 @@ a { color: inherit; text-decoration: none; }
 
 .hero-overlay {
   background:
-    linear-gradient(90deg, rgba(7, 14, 12, .88), rgba(7, 14, 12, .55) 45%, rgba(7, 14, 12, .22)),
-    linear-gradient(0deg, rgba(7, 14, 12, .82), transparent 55%);
+    linear-gradient(170deg, rgba(10, 20, 14, .38), rgba(10, 20, 14, .64) 58%, rgba(10, 20, 14, .84)),
+    linear-gradient(90deg, rgba(10, 20, 14, .72), rgba(10, 20, 14, .32) 64%);
 }
 
 .hero-content,
@@ -137,6 +141,20 @@ a { color: inherit; text-decoration: none; }
   text-transform: uppercase;
 }
 
+.section-kicker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-kicker::after {
+  content: "";
+  width: 52px;
+  height: 1px;
+  background: currentColor;
+  opacity: .45;
+}
+
 .hero h1,
 .route-section h2,
 .days-section h2,
@@ -149,9 +167,11 @@ a { color: inherit; text-decoration: none; }
 
 .hero h1 {
   max-width: 780px;
-  font-size: clamp(3rem, 8vw, 7.4rem);
-  line-height: .92;
+  font-size: clamp(2.8rem, 7vw, 6rem);
+  line-height: 1.02;
 }
+
+.hero h1::first-line { color: #fff; }
 
 .hero-copy {
   max-width: 680px;
@@ -177,17 +197,24 @@ a { color: inherit; text-decoration: none; }
   padding: 0 20px;
   border-radius: var(--radius);
   font-weight: 800;
+  transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
 }
 
 .primary-btn {
   color: var(--night);
-  background: var(--sun);
+  background: linear-gradient(135deg, var(--sun), #b5861a);
+  box-shadow: 0 8px 26px rgba(181, 134, 26, .32);
 }
 
 .ghost-btn {
   color: #fff;
   border: 1px solid rgba(255, 255, 255, .34);
   background: rgba(255, 255, 255, .1);
+}
+
+.primary-btn:hover,
+.ghost-btn:hover {
+  transform: translateY(-2px);
 }
 
 .hero-panel {
@@ -214,7 +241,9 @@ a { color: inherit; text-decoration: none; }
 .quick-stats {
   display: grid;
   grid-template-columns: repeat(5, minmax(130px, 1fr));
-  background: var(--forest);
+  background:
+    linear-gradient(135deg, rgba(26, 58, 42, .98), rgba(45, 80, 22, .94)),
+    var(--forest);
   color: #fff;
 }
 
@@ -276,16 +305,13 @@ a { color: inherit; text-decoration: none; }
   min-height: 360px;
   border-radius: var(--radius);
   overflow: hidden;
-  background:
-    radial-gradient(circle at 38% 7%, rgba(226, 184, 76, .22), transparent 18%),
-    radial-gradient(circle at 92% 72%, rgba(166, 78, 45, .18), transparent 18%),
-    linear-gradient(135deg, rgba(217, 238, 240, .96), rgba(244, 247, 241, .9)),
-    url("https://images.contenthub.dev/390osprlshgj/27b08207ff1184e106b6a725e44ac557/mhf-sommer-wandern-berliner-hoehenweg-zillertal-bild-christian-penning.jpg") center/cover;
+  border: 1px solid rgba(61, 43, 26, .16);
+  background: var(--mist);
   box-shadow: var(--shadow);
 }
 
 .route-map::before {
-  content: "";
+  content: none;
   position: absolute;
   inset: 16px;
   border: 1px solid rgba(20, 56, 41, .16);
@@ -297,13 +323,70 @@ a { color: inherit; text-decoration: none; }
 }
 
 .route-map::after {
-  content: "";
+  content: none;
   position: absolute;
   inset: 0;
   background:
     linear-gradient(155deg, transparent 0 20%, rgba(255, 255, 255, .22) 21% 25%, transparent 26%),
     linear-gradient(20deg, transparent 0 45%, rgba(20, 56, 41, .08) 46% 50%, transparent 51%);
   pointer-events: none;
+}
+
+.route-map .leaflet-container,
+.route-map.leaflet-container {
+  font-family: Inter, system-ui, sans-serif;
+  background: var(--mist);
+}
+
+.route-map-fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: end start;
+  gap: 8px;
+  padding: 24px;
+  color: #fff;
+  background:
+    linear-gradient(0deg, rgba(16, 32, 23, .86), rgba(16, 32, 23, .22)),
+    url("https://images.contenthub.dev/390osprlshgj/27b08207ff1184e106b6a725e44ac557/mhf-sommer-wandern-berliner-hoehenweg-zillertal-bild-christian-penning.jpg") center/cover;
+}
+
+.route-map.is-loaded .route-map-fallback {
+  display: none;
+}
+
+.route-map-fallback strong {
+  max-width: 540px;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  line-height: 1.15;
+}
+
+.route-map-fallback span {
+  max-width: 480px;
+  color: rgba(255, 255, 255, .78);
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.route-tooltip {
+  border: 1px solid rgba(61, 43, 26, .18);
+  border-radius: 999px;
+  color: var(--forest);
+  background: rgba(250, 248, 244, .94);
+  box-shadow: 0 6px 16px rgba(61, 43, 26, .16);
+  font-size: .72rem;
+  font-weight: 900;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 10px;
+  color: var(--bark);
+  background: var(--snow);
+}
+
+.leaflet-popup-content strong {
+  color: var(--forest);
 }
 
 .route-svg {
@@ -436,16 +519,18 @@ a { color: inherit; text-decoration: none; }
   display: grid;
   grid-template-columns: minmax(280px, .82fr) minmax(0, 1fr);
   gap: 0;
+  align-items: stretch;
   overflow: hidden;
   margin: 0 auto 28px;
   max-width: 1180px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--snow);
-  box-shadow: 0 10px 34px rgba(23, 33, 29, .09);
+  box-shadow: 0 10px 34px rgba(61, 43, 26, .1);
 }
 
-.day-card:nth-of-type(even) .day-media { order: 2; }
+.day-card:nth-of-type(even) .day-media { grid-column: 2; }
+.day-card:nth-of-type(even) .day-body { grid-column: 1; }
 .day-card.compact { grid-template-columns: 1fr; max-width: 780px; }
 .day-card.challenge { border-color: rgba(166, 78, 45, .45); }
 .day-card.challenge::before {
@@ -465,17 +550,26 @@ a { color: inherit; text-decoration: none; }
 }
 
 .day-media {
+  position: relative;
+  grid-column: 1;
+  grid-row: 1;
+  overflow: hidden;
   min-height: 390px;
   background: var(--line);
 }
 
 .day-media img {
+  position: absolute;
+  inset: 0;
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
 .day-body {
+  grid-column: 2;
+  grid-row: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -494,6 +588,7 @@ a { color: inherit; text-decoration: none; }
 .day-card h3 {
   margin: 0;
   color: var(--forest);
+  font-family: "Playfair Display", Georgia, serif;
   font-size: clamp(1.5rem, 3vw, 2.55rem);
   line-height: 1.08;
 }
@@ -516,7 +611,7 @@ a { color: inherit; text-decoration: none; }
   padding: 13px 14px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: linear-gradient(180deg, #fff, #f7f9f5);
+  background: linear-gradient(180deg, #fff, var(--mist));
 }
 
 .challenge .metric {
@@ -545,17 +640,31 @@ a { color: inherit; text-decoration: none; }
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: #fff;
-  box-shadow: 0 8px 24px rgba(23, 33, 29, .08);
+  box-shadow: 0 8px 24px rgba(61, 43, 26, .08);
+}
+
+.day-route-embed {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  margin-top: 0;
+  border-width: 1px 0 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .komoot-panel.has-embed {
   background: var(--night);
 }
 
+.komoot-panel.is-loading {
+  background:
+    linear-gradient(90deg, rgba(245, 240, 232, .8), rgba(250, 248, 244, .96), rgba(245, 240, 232, .8));
+}
+
 .komoot-panel iframe {
   display: block;
   width: 100%;
-  min-height: 420px;
+  height: 700px;
   border: 0;
   background: var(--mist);
 }
@@ -571,7 +680,6 @@ a { color: inherit; text-decoration: none; }
   color: #fff;
   background:
     linear-gradient(0deg, rgba(11, 23, 20, .88), rgba(11, 23, 20, .16) 70%),
-    radial-gradient(circle at 78% 20%, rgba(226, 184, 76, .35), transparent 20%),
     linear-gradient(135deg, rgba(20, 56, 41, .8), rgba(217, 238, 240, .62)),
     url("https://images.contenthub.dev/390osprlshgj/27b08207ff1184e106b6a725e44ac557/mhf-sommer-wandern-berliner-hoehenweg-zillertal-bild-christian-penning.jpg?w=1200") center/cover;
 }
@@ -656,9 +764,9 @@ a { color: inherit; text-decoration: none; }
 
 .terrain-tags span {
   padding: 7px 10px;
-  border-radius: 5px;
+  border-radius: 999px;
   color: var(--forest);
-  background: var(--glacier);
+  background: #efe6d6;
   font-size: .78rem;
   font-weight: 800;
 }
@@ -747,7 +855,7 @@ a { color: inherit; text-decoration: none; }
   border: 1px solid var(--line);
   border-radius: var(--radius);
   color: var(--forest);
-  background: var(--mist);
+  background: linear-gradient(180deg, #fff, var(--mist));
   font-weight: 800;
 }
 
@@ -774,11 +882,18 @@ a { color: inherit; text-decoration: none; }
   .day-card {
     grid-template-columns: 1fr;
   }
+  .day-media,
+  .day-body,
+  .day-card:nth-of-type(even) .day-media,
+  .day-card:nth-of-type(even) .day-body,
+  .day-route-embed {
+    grid-column: 1;
+    grid-row: auto;
+  }
   .hero { align-items: end; }
   .hero-panel { max-width: 520px; }
   .section-heading { display: block; }
   .section-heading p { margin-top: 16px; }
-  .day-card:nth-of-type(even) .day-media { order: 0; }
 }
 
 @media (max-width: 620px) {
@@ -799,4 +914,5 @@ a { color: inherit; text-decoration: none; }
   .metric-grid { grid-template-columns: 1fr 1fr; }
   .route-map { min-height: 300px; }
   .map-point span { font-size: .66rem; }
+  .komoot-panel iframe { height: 560px; }
 }
